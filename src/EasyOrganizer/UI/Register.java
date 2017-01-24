@@ -1,16 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package EasyOrganizer.UI;
 
 import EasyOrganizer.db.DBHandler;
 import EasyOrganizer.model.EasyOrganizerModel;
 import java.awt.CardLayout;
+import java.awt.Graphics;
 import static java.lang.String.format;
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -19,15 +24,26 @@ import javax.swing.JPanel;
  */
 public class Register extends javax.swing.JPanel {
     private JPanel contentPanel;
+    private DBHandler dbh;
+    private Date date;
+    private Date time;
     
     /**
      * Creates new form Menu
      */
-    public Register(JPanel contentPanel) {
+    public Register(JPanel contentPanel, DBHandler dbh) {
+        this.dbh = dbh;
         this.contentPanel = contentPanel;
         initComponents();
     }
-
+    
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(new Background().getBackgroud("back.jpg"), 0,0, this);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +64,8 @@ public class Register extends javax.swing.JPanel {
         titleLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         back = new javax.swing.JButton();
-        date = new javax.swing.JFormattedTextField();
+        timeButton = new org.jbundle.thin.base.screen.jcalendarbutton.JTimeButton();
+        dateButton = new org.sourceforge.jcalendarbutton.JCalendarButton();
 
         setPreferredSize(new java.awt.Dimension(450, 450));
 
@@ -101,10 +118,17 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
-        date.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat(""))));
-        date.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateActionPerformed(evt);
+        timeButton.setText("Hora");
+        timeButton.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                timeButtonPropertyChange(evt);
+            }
+        });
+
+        dateButton.setText("data");
+        dateButton.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateButtonPropertyChange(evt);
             }
         });
 
@@ -131,21 +155,25 @@ public class Register extends javax.swing.JPanel {
                                     .addComponent(dateLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane1)
-                                    .addComponent(date)))))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(dateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(timeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(185, 185, 185)
                         .addComponent(titleLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(titleLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,10 +190,12 @@ public class Register extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateLabel)
-                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(timeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(back)
                 .addContainerGap())
         );
@@ -185,19 +215,53 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_backActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      EasyOrganizerModel eom = new EasyOrganizerModel(0, title.getText(),
-                subject.getText(), description.getText(), (Date) date.getValue());
-        new DBHandler().insert(eom);
+        String t = title.getText();
+        String s = subject.getText();
+        String d = description.getText();
+        
+        if(date == null){
+            date = new java.util.Date();
+        }
+        if (time == null) {
+            time = new java.util.Date();
+        }
+        
+        date.setHours(time.getHours());
+        date.setMinutes(time.getMinutes());
+        
+        if(t.isEmpty() || s.isEmpty() || d.isEmpty()){
+            JOptionPane.showMessageDialog(contentPanel, "Todos os Campos devem ser preenchidos");
+        }else{
+            
+            EasyOrganizerModel eom = new EasyOrganizerModel(0, t, s, d, date);
+            System.out.println(eom.toString());
+            if(dbh.insert(eom)){
+                JOptionPane.showMessageDialog(contentPanel, "Tarefa "+ t+ " Adicionada!");
+                title.setText("");
+                subject.setText("");
+                description.setText("");
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateActionPerformed
+    private void timeButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_timeButtonPropertyChange
+        if (evt.getNewValue() instanceof java.util.Date){
+            this.time = (Date) evt.getNewValue();
+        }
+        
+        
+    }//GEN-LAST:event_timeButtonPropertyChange
 
+    private void dateButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateButtonPropertyChange
+        if (evt.getNewValue() instanceof java.util.Date){
+            this.date = (Date) evt.getNewValue();
+        }
+    }//GEN-LAST:event_dateButtonPropertyChange
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
-    private javax.swing.JFormattedTextField date;
+    private org.sourceforge.jcalendarbutton.JCalendarButton dateButton;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JTextArea description;
     private javax.swing.JLabel descriptionLabel;
@@ -205,6 +269,7 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField subject;
     private javax.swing.JLabel subjectLabel;
+    private org.jbundle.thin.base.screen.jcalendarbutton.JTimeButton timeButton;
     private javax.swing.JTextField title;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel titleLabel1;

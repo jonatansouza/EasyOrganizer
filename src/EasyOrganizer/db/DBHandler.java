@@ -11,7 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +39,7 @@ public class DBHandler {
                     " title TEXT NOT NULL, " +
                     " description TEXT NOT NULL, " +
                     " subject TEXT NOT NULL, " +
-                    " date DATE NOT NULL)";
+                    " date TEXT NOT NULL)";
             stmt.executeQuery(sql);
             stmt.close();
         } catch (SQLException ex) {
@@ -52,7 +55,7 @@ public class DBHandler {
             pstmt.setString(1, eom.getTitle());
             pstmt.setString(2, eom.getDescription());
             pstmt.setString(3, eom.getSubject());
-            pstmt.setDate(4, eom.getDate());
+            pstmt.setString(4, new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS").format(eom.getDate()));
             pstmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -66,18 +69,23 @@ public class DBHandler {
         String sql = "SELECT id, title, description, subject, date FROM appointments";
         Statement stmt;
         ResultSet rs;
+        Date dt = null;
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             
             // loop through the result set
             while (rs.next()) {
-                eoms.add(new EasyOrganizerModel(rs.getInt("id"),
-                        rs.getString("title"),
-                        rs.getString("subject"),
-                        rs.getString("description"),
-                        rs.getDate("date")));
-                
+                try {
+                    dt = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS").parse(rs.getString("date"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                        eoms.add(new EasyOrganizerModel(rs.getInt("id"),
+                                rs.getString("title"),
+                                rs.getString("subject"),
+                                rs.getString("description"),
+                                dt));
             }
             stmt.close();
             return eoms;
@@ -115,7 +123,7 @@ public class DBHandler {
             pstmt.setString(1, eom.getTitle());
             pstmt.setString(2, eom.getSubject());
             pstmt.setString(3, eom.getDescription());
-            pstmt.setDate(4, eom.getDate());
+            pstmt.setString(4, eom.getDate().toString());
             pstmt.setInt(5, eom.getId());
             // update
             pstmt.executeUpdate();

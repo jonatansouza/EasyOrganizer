@@ -1,45 +1,61 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package EasyOrganizer.UI;
 
 import EasyOrganizer.db.DBHandler;
 import EasyOrganizer.model.EasyOrganizerModel;
+import java.awt.Graphics;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javafx.event.ActionEvent;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author superman
  */
 public class List extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form List
      */
     private DBHandler dbh;
     private JPanel contentPanel;
     
-    public List(JPanel contentPanel) {
+    public List(JPanel contentPanel, DBHandler dbh) {
         this.contentPanel = contentPanel;
-        dbh = new DBHandler();
+        this.dbh = dbh;
         initComponents();
         addRowTable();
+    }
+    
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(new Background().getBackgroud("back.jpg"), 0,0, this);
     }
     
     public void addRowTable(){
         DefaultTableModel dtm = (DefaultTableModel) listTable.getModel();
         ArrayList<EasyOrganizerModel> eoms = (ArrayList<EasyOrganizerModel>) dbh.selectAll();
         System.out.println(eoms);
-        Object rowData[] = new Object[4];
+        Object rowData[] = new Object[5];
         for(EasyOrganizerModel eom : eoms){
             rowData[0] = eom.getTitle();
             rowData[1] = eom.getSubject();
             rowData[2] = eom.getDescription();
             rowData[3] = eom.getDate();
+            rowData[4] = "X";
             dtm.addRow(rowData);
         }
     }
@@ -54,6 +70,8 @@ public class List extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         listTable = new javax.swing.JTable();
+        textFilter = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(450, 450));
 
@@ -63,32 +81,75 @@ public class List extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Titulo", "Assunto", "Descrição", "Data"
+                "Titulo", "Assunto", "Descrição", "Data", "Ver"
             }
         ));
         jScrollPane1.setViewportView(listTable);
+
+        textFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFilterActionPerformed(evt);
+            }
+        });
+        textFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textFilterKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Procurar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                        .addComponent(textFilter)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(35, 35, 35))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void textFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFilterActionPerformed
+        
+        
+    }//GEN-LAST:event_textFilterActionPerformed
+
+    private void textFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFilterKeyReleased
+        //DefaultTableModel dtm = (DefaultTableModel) listTable.getModel();
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(listTable.getModel());
+        listTable.setRowSorter(rowSorter);
+        
+        String text = textFilter.getText();
+        
+        if (text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
+        
+    }//GEN-LAST:event_textFilterKeyReleased
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable listTable;
+    private javax.swing.JTextField textFilter;
     // End of variables declaration//GEN-END:variables
 }
