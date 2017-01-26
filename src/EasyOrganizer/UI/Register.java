@@ -5,6 +5,7 @@
 */
 package EasyOrganizer.UI;
 
+import EasyOrganizer.controller.EasyOrganizerController;
 import EasyOrganizer.db.DBHandler;
 import EasyOrganizer.model.EasyOrganizerModel;
 import java.awt.CardLayout;
@@ -24,15 +25,15 @@ import javax.swing.JPanel;
  */
 public class Register extends javax.swing.JPanel {
     private JPanel contentPanel;
-    private DBHandler dbh;
+    private EasyOrganizerController eomController;
     private Date date;
     private Date time;
     
     /**
      * Creates new form Menu
      */
-    public Register(JPanel contentPanel, DBHandler dbh) {
-        this.dbh = dbh;
+    public Register(JPanel contentPanel, EasyOrganizerController eomController) {
+        this.eomController = eomController;
         this.contentPanel = contentPanel;
         initComponents();
     }
@@ -233,9 +234,7 @@ public class Register extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(contentPanel, "Todos os Campos devem ser preenchidos");
         }else{
             
-            EasyOrganizerModel eom = new EasyOrganizerModel(0, t, s, d, date);
-            System.out.println(eom.toString());
-            if(dbh.insert(eom)){
+            if(eomController.insertModel(t, s, d, date)){
                 JOptionPane.showMessageDialog(contentPanel, "Tarefa "+ t+ " Adicionada!");
                 title.setText("");
                 subject.setText("");

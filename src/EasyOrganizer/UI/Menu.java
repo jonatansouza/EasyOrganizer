@@ -5,6 +5,7 @@
  */
 package EasyOrganizer.UI;
 
+import EasyOrganizer.controller.EasyOrganizerController;
 import EasyOrganizer.db.DBHandler;
 import java.awt.CardLayout;
 import java.awt.Graphics;
@@ -27,10 +28,10 @@ public class Menu extends javax.swing.JPanel {
      * Creates new form Menu
      */
     private JPanel contentPanel;
-    private DBHandler dbh;
+    private EasyOrganizerController eomController;
     
-    public Menu(JPanel contentPanel, DBHandler dbh) {
-        this.dbh = dbh;
+    public Menu(JPanel contentPanel, EasyOrganizerController eomController) {
+        this.eomController = eomController;
         this.contentPanel = contentPanel;
         initComponents();
         

@@ -39,7 +39,7 @@ public class DBHandler {
                     " title TEXT NOT NULL, " +
                     " description TEXT NOT NULL, " +
                     " subject TEXT NOT NULL, " +
-                    " date TEXT NOT NULL)";
+                    " date INTEGER NOT NULL)";
             stmt.executeQuery(sql);
             stmt.close();
         } catch (SQLException ex) {
@@ -55,7 +55,7 @@ public class DBHandler {
             pstmt.setString(1, eom.getTitle());
             pstmt.setString(2, eom.getDescription());
             pstmt.setString(3, eom.getSubject());
-            pstmt.setString(4, new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS").format(eom.getDate()));
+            pstmt.setLong(4, eom.getDate().getTime());
             pstmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -67,35 +67,53 @@ public class DBHandler {
     public List<EasyOrganizerModel> selectAll(){
         List eoms = new ArrayList<EasyOrganizerModel>();
         String sql = "SELECT id, title, description, subject, date FROM appointments";
-        Statement stmt;
-        ResultSet rs;
-        Date dt = null;
+        
+        
         try {
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-            
+           Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             // loop through the result set
             while (rs.next()) {
-                try {
-                    dt = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS").parse(rs.getString("date"));
-                } catch (ParseException ex) {
-                    Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                        eoms.add(new EasyOrganizerModel(rs.getInt("id"),
-                                rs.getString("title"),
-                                rs.getString("subject"),
-                                rs.getString("description"),
-                                dt));
+                eoms.add(new EasyOrganizerModel(rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("subject"),
+                        rs.getString("description"),
+                        new Date(rs.getLong("date"))));
             }
             stmt.close();
             return eoms;
         } catch (SQLException ex) {
             Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return null;
     }
     
-    public void delete(int id){
+    public EasyOrganizerModel selectById(int id){
+        EasyOrganizerModel eom = null;
+        String sql = "SELECT id, title, description, subject, date FROM appointments WHERE id="+id;
+        
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            // loop through the result set
+            while (rs.next()) {
+                eom = new EasyOrganizerModel(rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("subject"),
+                        rs.getString("description"),
+                        new Date(rs.getLong("date")));
+            }
+            stmt.close();
+            return eom;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public boolean delete(int id){
         String sql = "DELETE FROM appointments WHERE id = ?";
         
         PreparedStatement pstmt;
@@ -103,8 +121,9 @@ public class DBHandler {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
+            return true;
         } catch (SQLException ex) {
-            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         
     }

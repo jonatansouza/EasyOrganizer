@@ -9,9 +9,11 @@ import EasyOrganizer.UI.List;
 import EasyOrganizer.UI.Menu;
 import EasyOrganizer.UI.Register;
 import EasyOrganizer.UI.Tarefas;
+import EasyOrganizer.controller.EasyOrganizerController;
 import EasyOrganizer.db.DBHandler;
 import static EasyOrganizer.model.Main.main;
 import java.awt.CardLayout;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,27 +27,24 @@ import javax.swing.SwingUtilities;
 public class Main {
     private Menu menuPanel;
     private Register registerPanel;
-    private List listPanel;
     private Tarefas tarefas;
-    private DBHandler dbh;
+    private EasyOrganizerController eomController;
     
     private void displayGUI(){
         
-        dbh = new DBHandler();
+        eomController = new EasyOrganizerController();
         
         JFrame frame = new JFrame("Easy Organizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = new JPanel();
         contentPane.setBorder(
-                BorderFactory.createEmptyBorder(5, 5, 5, 5));
+         BorderFactory.createEmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new CardLayout());
-        menuPanel = new Menu(contentPane, dbh);
-        registerPanel = new Register(contentPane, dbh);
-        listPanel = new List(contentPane, dbh);
-        tarefas = new Tarefas(contentPane, dbh);
+        menuPanel = new Menu(contentPane, eomController);
+        registerPanel = new Register(contentPane, eomController);
+        tarefas = new Tarefas(contentPane, eomController);
         contentPane.add(menuPanel, "menu");
         contentPane.add(registerPanel, "register");
-        contentPane.add(listPanel, "list");
         contentPane.add(tarefas, "tarefas");
         frame.setContentPane(contentPane);
         frame.pack();
@@ -61,5 +60,6 @@ public class Main {
             }
         });
     }
+    
     
 }
