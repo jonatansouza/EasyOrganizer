@@ -5,15 +5,11 @@
 */
 package EasyOrganizer.model;
 
-import EasyOrganizer.UI.List;
 import EasyOrganizer.UI.Menu;
 import EasyOrganizer.UI.Register;
 import EasyOrganizer.UI.Tarefas;
 import EasyOrganizer.controller.EasyOrganizerController;
-import EasyOrganizer.db.DBHandler;
-import static EasyOrganizer.model.Main.main;
 import java.awt.CardLayout;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

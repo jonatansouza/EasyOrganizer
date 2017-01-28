@@ -8,6 +8,7 @@ package EasyOrganizer.UI;
 import EasyOrganizer.controller.EasyOrganizerController;
 import EasyOrganizer.db.DBHandler;
 import EasyOrganizer.model.EasyOrganizerModel;
+import EasyOrganizer.util.EasyOrganizerConst;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.beans.PropertyChangeEvent;
@@ -375,7 +376,7 @@ public class Tarefas extends javax.swing.JPanel {
         if((int) spinner.getValue() <= 0){
             JOptionPane.showMessageDialog(contentPanel, "valor invalido");
         }else{
-            long nextDays = (60*60*24)* (int)spinner.getValue();
+            long nextDays = EasyOrganizerConst.DAY * ((int)spinner.getValue()+1);
             populate(eomController.listByDateInterval(new Date(), new Date(new Date().getTime() + nextDays)));
         }
         

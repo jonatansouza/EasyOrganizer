@@ -28,7 +28,7 @@ public class EasyOrganizerController {
     public List<EasyOrganizerModel> listBySubject(String subject){
         List<EasyOrganizerModel> eoms = new ArrayList<>();
         for(EasyOrganizerModel eom : dBHandler.selectAll()){
-            if(eom.getSubject().equals(subject)){
+            if(eom.getSubject().contains(subject)){
                 eoms.add(eom);
             }
         }
