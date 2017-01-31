@@ -1,29 +1,22 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package EasyOrganizer.UI;
 
 import EasyOrganizer.controller.EasyOrganizerController;
-import EasyOrganizer.db.DBHandler;
 import java.awt.CardLayout;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
- * @author superman
+ * Tela de menu do aplicativo
+ * @author Ana Paula
  */
 public class Menu extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form Menu
      */
@@ -44,8 +37,8 @@ public class Menu extends javax.swing.JPanel {
         super.paintComponent(g);
         g.drawImage(new Background().getBackgroud("back.jpg"), 0,0, this);
     }
-
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +53,8 @@ public class Menu extends javax.swing.JPanel {
         listButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         listButton1 = new javax.swing.JButton();
+        listButton2 = new javax.swing.JButton();
+        listButton3 = new javax.swing.JButton();
 
         jButton1.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jButton1.setText("Registrar");
@@ -91,22 +86,47 @@ public class Menu extends javax.swing.JPanel {
             }
         });
 
+        listButton2.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
+        listButton2.setText("Sobre");
+        listButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listButton2ActionPerformed(evt);
+            }
+        });
+
+        listButton3.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
+        listButton3.setText("Ajuda");
+        listButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 306, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(listButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                    .addComponent(listButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(243, 243, 243)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(listButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(listButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(listButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addComponent(listButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(283, 283, 283)
+                        .addComponent(jLabel2)))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,12 +136,16 @@ public class Menu extends javax.swing.JPanel {
                 .addGap(49, 49, 49)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(listButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addComponent(listButton1)
-                .addGap(27, 27, 27))
+                .addGap(37, 37, 37))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -139,6 +163,33 @@ public class Menu extends javax.swing.JPanel {
         System.exit(0);
     }//GEN-LAST:event_listButton1ActionPerformed
 
+    private void listButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listButton2ActionPerformed
+        
+        Object[] options = {
+            "fechar"
+        };
+        
+        JOptionPane.showOptionDialog(contentPanel, new About(), "Sobre Easy Organizer",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                null);
+    }//GEN-LAST:event_listButton2ActionPerformed
+
+    private void listButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listButton3ActionPerformed
+        Object[] options = {
+            "fechar"
+        };
+        
+        JOptionPane.showOptionDialog(contentPanel, new Help(), "Ajuda Easy Organizer",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                null);
+    }//GEN-LAST:event_listButton3ActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -146,5 +197,7 @@ public class Menu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton listButton;
     private javax.swing.JButton listButton1;
+    private javax.swing.JButton listButton2;
+    private javax.swing.JButton listButton3;
     // End of variables declaration//GEN-END:variables
 }

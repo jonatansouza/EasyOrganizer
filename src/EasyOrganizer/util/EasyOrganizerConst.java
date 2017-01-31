@@ -6,8 +6,8 @@
 package EasyOrganizer.util;
 
 /**
- *
- * @author superman
+ * este classe contem uma constante que repesenta a quantidade de milisegundos em um dia
+ * @author Ana Paula
  */
 public class EasyOrganizerConst {
     public static long DAY = 86400000L;

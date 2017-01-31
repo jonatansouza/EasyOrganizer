@@ -6,15 +6,15 @@
 package EasyOrganizer.UI;
 
 /**
- *
- * @author jonatan
+ * Tela que apresenta o compromisso clicado na tabela
+ * @author Ana Paula
  */
-public class Tarefa extends javax.swing.JPanel {
+public class Task extends javax.swing.JPanel {
 
     /**
      * Creates new form Tarefa
      */
-    public Tarefa(String t, String s, String d, String dt) {
+    public Task(String t, String s, String d, String dt) {
         initComponents();
         this.title.setText(t);
         this.subject.setText(s);

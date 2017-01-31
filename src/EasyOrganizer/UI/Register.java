@@ -6,22 +6,15 @@
 package EasyOrganizer.UI;
 
 import EasyOrganizer.controller.EasyOrganizerController;
-import EasyOrganizer.db.DBHandler;
-import EasyOrganizer.model.EasyOrganizerModel;
 import java.awt.CardLayout;
 import java.awt.Graphics;
-import static java.lang.String.format;
 import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
- * @author superman
+ * Tela com o formulario para registrar os compromissos
+ * @author Ana Paula
  */
 public class Register extends javax.swing.JPanel {
     private JPanel contentPanel;
@@ -101,7 +94,6 @@ public class Register extends javax.swing.JPanel {
         titleLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         titleLabel1.setText("Cadastro");
 
-        jButton1.setBackground(new java.awt.Color(10, 177, 13));
         jButton1.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +102,6 @@ public class Register extends javax.swing.JPanel {
             }
         });
 
-        back.setBackground(new java.awt.Color(10, 177, 13));
         back.setFont(new java.awt.Font("Lucida Sans", 1, 15)); // NOI18N
         back.setText("Voltar");
         back.addActionListener(new java.awt.event.ActionListener() {
@@ -148,8 +139,8 @@ public class Register extends javax.swing.JPanel {
                                     .addComponent(subjectLabel))
                                 .addGap(25, 25, 25)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(title)
+                                    .addComponent(subject)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(descriptionLabel)
@@ -159,9 +150,9 @@ public class Register extends javax.swing.JPanel {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(dateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(dateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(timeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(timeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(185, 185, 185)
@@ -169,7 +160,7 @@ public class Register extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +187,7 @@ public class Register extends javax.swing.JPanel {
                         .addComponent(dateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(back)
                 .addContainerGap())
         );

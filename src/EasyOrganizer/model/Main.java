@@ -7,7 +7,7 @@ package EasyOrganizer.model;
 
 import EasyOrganizer.UI.Menu;
 import EasyOrganizer.UI.Register;
-import EasyOrganizer.UI.Tarefas;
+import EasyOrganizer.UI.Tasks;
 import EasyOrganizer.controller.EasyOrganizerController;
 import java.awt.CardLayout;
 import javax.swing.BorderFactory;
@@ -16,16 +16,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- *
- * @author jonatan
- */
+* <h1>Easy Organizer</h1>
+* aplicativo simples para salvar e listar tarefas e compromissos
+* 
+* @author  Ana Paula
+* @version 1.0
+*  
+*/
 
 public class Main {
     private Menu menuPanel;
     private Register registerPanel;
-    private Tarefas tarefas;
+    private Tasks tarefas;
     private EasyOrganizerController eomController;
     
+    /**
+     * este metodo inicia a interface grafica e os controles necessarios para o funcionamento da aplicação
+     */
     private void displayGUI(){
         
         eomController = new EasyOrganizerController();
@@ -38,7 +45,7 @@ public class Main {
         contentPane.setLayout(new CardLayout());
         menuPanel = new Menu(contentPane, eomController);
         registerPanel = new Register(contentPane, eomController);
-        tarefas = new Tarefas(contentPane, eomController);
+        tarefas = new Tasks(contentPane, eomController);
         contentPane.add(menuPanel, "menu");
         contentPane.add(registerPanel, "register");
         contentPane.add(tarefas, "tarefas");

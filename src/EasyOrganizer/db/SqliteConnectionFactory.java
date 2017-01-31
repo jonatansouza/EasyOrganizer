@@ -7,16 +7,22 @@ package EasyOrganizer.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
- *
- * @author jonatan
+ * 
+ * Fabrica de conexões fornece uma conexão com o sqlite através do drive dentro do diretório resource
+ * 
+ * IMPORTANTE
+ * Caso ocorra algum erro na compilação verefique se o drivers dentro do diretorio driver estao no classpath
+ * 
+ * @author Ana Paula
  */
 public class SqliteConnectionFactory {
+    /**
+     * Cria uma conexão
+     * @return Caso ocorra algum erro verifique se os jars dentro do folder driver estão no classpath
+     */
     public static Connection connect() {
         Connection c = null;
         try {

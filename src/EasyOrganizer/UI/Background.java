@@ -5,7 +5,6 @@
  */
 package EasyOrganizer.UI;
 
-import EasyOrganizer.UI.Menu;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -13,11 +12,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author jonatan
+ * responsavel pelo background da aplicação
+ * 
+ * @author Ana Paula
  */
 public class Background {
-    
+    /**
+     * Serializa uma imagem em um objeto Image
+     * @param path
+     * @return 
+     */
     public Image getBackgroud(String path){
         Image image = null;
         try {
