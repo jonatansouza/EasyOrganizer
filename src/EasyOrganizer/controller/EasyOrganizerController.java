@@ -7,9 +7,12 @@ package EasyOrganizer.controller;
 
 import EasyOrganizer.db.DBHandler;
 import EasyOrganizer.model.EasyOrganizerModel;
+import EasyOrganizer.util.SortByDate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +37,8 @@ public class EasyOrganizerController {
                 eoms.add(eom);
             }
         }
+        
+        Collections.sort(eoms, new SortByDate());
         return eoms;
     }
     /**
@@ -49,6 +54,7 @@ public class EasyOrganizerController {
                 eoms.add(eom);
             }
         }
+        Collections.sort(eoms, new SortByDate());
         return eoms;
     }
     /**
@@ -79,14 +85,17 @@ public class EasyOrganizerController {
                 eoms.add(eom);
             }
         }
+        Collections.sort(eoms, new SortByDate());
         return eoms;
     }
     /**
      * lista todos
-     * @return lista com todos EasyOrganizerModel 
+     * @return lista com todos EasyOrganizerModel
      */
     public List<EasyOrganizerModel> listAll(){
-        return dBHandler.selectAll();
+        ArrayList<EasyOrganizerModel> eoms = (ArrayList<EasyOrganizerModel>) dBHandler.selectAll();
+        Collections.sort(eoms, new SortByDate());
+        return eoms;
     }
     /**
      * procura pelo id
@@ -102,16 +111,16 @@ public class EasyOrganizerController {
      * @param subject
      * @param description
      * @param date
-     * @return 
+     * @return
      */
     public boolean insertModel(String title, String subject, String description, Date date){
         EasyOrganizerModel eom = new EasyOrganizerModel(0, title, subject, description, date);
         return dBHandler.insert(eom);
     }
     /**
-     * responsavel por deletar 
+     * responsavel por deletar
      * @param id
-     * @return 
+     * @return
      */
     public boolean deleteModel(int id){
         return dBHandler.delete(id);

@@ -64,7 +64,7 @@ public class Tasks extends javax.swing.JPanel {
         for(EasyOrganizerModel eom: eoms){
             rowData[0] = eom.getId();
             rowData[1] = eom.getSubject();
-            rowData[2] = new SimpleDateFormat("DD/MM/YYYY HH:MM").format(eom.getDate());
+            rowData[2] = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(eom.getDate());
             dm.addRow(rowData);
         }
     }
