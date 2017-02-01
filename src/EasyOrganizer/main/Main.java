@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package EasyOrganizer.model;
+package EasyOrganizer.main;
 
 import EasyOrganizer.UI.Menu;
 import EasyOrganizer.UI.Register;
