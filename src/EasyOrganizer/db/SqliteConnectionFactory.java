@@ -5,6 +5,7 @@
 */
 package EasyOrganizer.db;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -25,6 +26,12 @@ public class SqliteConnectionFactory {
      */
     public static Connection connect() {
         Connection c = null;
+        File resource = new File("resource");
+        if(!resource.isDirectory()){
+            System.out.println("Creating dir");
+            resource.mkdir();
+        }
+        
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:resource/easyorganizer.db");
