@@ -95,6 +95,7 @@ public class Tasks extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -202,6 +203,8 @@ public class Tasks extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setText("<html><body><b>dica:</b> Clique no compromisso na<br>tabela para visualiza-lo</body></html>");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,7 +243,8 @@ public class Tasks extends javax.swing.JPanel {
                                             .addComponent(formEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jButton3)))))))
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -271,6 +275,8 @@ public class Tasks extends javax.swing.JPanel {
                             .addComponent(jButton4))
                         .addGap(37, 37, 37)
                         .addComponent(jButton5)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
@@ -298,6 +304,7 @@ public class Tasks extends javax.swing.JPanel {
         if(del == 1){
             if(eomController.deleteModel(eom.getId())){
                 populate(eomController.listAll());
+                JOptionPane.showMessageDialog(contentPanel, "Compromisso "+eom.getTitle()+" deletado com sucesso!");
             }else{
                 JOptionPane.showMessageDialog(contentPanel, "Ocorreu um erro ao deletar");
             }
@@ -393,6 +400,7 @@ public class Tasks extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JSpinner spinner;
